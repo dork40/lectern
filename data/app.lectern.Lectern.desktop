@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Lectern
+GenericName=Audiobook Player
+Comment=Listen to audiobooks with a sleep timer, bookmarks of your progress and voice boost
+Exec=lectern %F
+Icon=app.lectern.Lectern
+Terminal=false
+Categories=GTK;GNOME;AudioVideo;Audio;Player;
+Keywords=audiobook;book;m4b;podcast;listen;sleep;
+StartupNotify=true
+MimeType=audio/x-m4b;audio/mp4;audio/x-m4a;audio/mpeg;audio/ogg;audio/x-vorbis+ogg;audio/opus;audio/x-opus+ogg;audio/flac;audio/x-flac;
+DBusActivatable=false

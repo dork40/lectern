@@ -1,0 +1,48 @@
+--- a/src/inputs/pipe.c	2026-10-24 11:51:41.763000958 -0700
++++ b/src/inputs/pipe.c	2026-10-24 11:51:41.816902081 -0700
+@@ -927,6 +927,26 @@
+ }
+ 
+ 
++// The metadata pipe's event lives on evbase_pipe, so add/del must run on the
++// pipe thread too. Running them on the worker pool (several threads) let a
++// stop and a setup tear down the same evbuffer concurrently: double free,
++// "Assertion buffer->refcnt > 0 failed" and OwnTone aborts.
++static enum command_state
++pipe_metadata_watch_add_cmd(void *arg, int *retval)
++{
++  pipe_metadata_watch_add(arg);
++  *retval = 0;
++  return COMMAND_END;
++}
++
++static enum command_state
++pipe_metadata_watch_del_cmd(void *arg, int *retval)
++{
++  pipe_metadata_watch_del(NULL);
++  *retval = 0;
++  return COMMAND_END;
++}
++
+ /* ----------------------- PIPE WATCH THREAD START/STOP --------------------- */
+ /*                             Thread: filescanner                            */
+ 
+@@ -1042,7 +1062,7 @@
+   pipe->fd = fd;
+   pipe->is_autostarted = (source->id == pipe_autostart_id);
+ 
+-  worker_execute(pipe_metadata_watch_add, source->path, strlen(source->path) + 1, 0);
++  commands_exec_async(cmdbase, pipe_metadata_watch_add_cmd, strdup(source->path));
+ 
+   source->input_ctx = pipe;
+ 
+@@ -1074,8 +1094,7 @@
+       commands_exec_async(cmdbase, pipe_watch_reset, cmdarg);
+     }
+ 
+-  if (pipe_metadata.pipe)
+-    worker_execute(pipe_metadata_watch_del, NULL, 0, 0);
++  commands_exec_async(cmdbase, pipe_metadata_watch_del_cmd, NULL);
+ 
+   pipe_free(pipe);
+ 

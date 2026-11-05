@@ -1,0 +1,46 @@
+# OwnTone with two fixes Lectern needs for AirPlay TVs (based on the AUR package
+# owntone-server by John-Michael Mulesa). Built and installed by Lectern's install.sh.
+#  - pipe-metadata-thread.patch: OwnTone crashed ("Assertion buffer->refcnt > 0 failed")
+#    when playback restarted while it was reading cover/title metadata.
+#  - airplay-sample-rate.patch: OWNTONE_AIRPLAY_SAMPLE_RATE=48000 streams 48 kHz ALAC,
+#    for TVs (Roku) that play OwnTone's 44.1 kHz stream too fast.
+pkgname=owntone-server
+pkgver=29.3
+pkgrel=101
+pkgdesc='iTunes-compatible media server (fka forked-daapd), with fixes for Lectern'
+arch=('x86_64' 'aarch64')
+url="https://github.com/owntone/owntone-server"
+license=('GPL-2.0-or-later')
+depends=(avahi sqlite3 ffmpeg confuse libevent libxml2 libunistring libplist libsodium protobuf-c json-c libwebsockets)
+makedepends=(gperf)
+backup=(etc/owntone.conf)
+install=owntone.install
+source=(https://github.com/owntone/owntone-server/archive/$pkgver.tar.gz owntone.install override.conf
+        pipe-metadata-thread.patch airplay-sample-rate.patch)
+sha256sums=('b6677812d3535b9aab2889234ecff4b059d33723e94b3fb54e4e01a67a7bdabf'
+            'c21617a866ecd4ae1ea81b372e7ad3a782e6b6bcf3b1c03e6f0666953b1844f2'
+            '102a179eb7e0c022bf3f8c27656f66ffff0e0b0ae07d65b12d790b9c924f42b0'
+            '3a47a04c6e76120aeb698ac6f3620d88375b4e87c83ccc6e2a7116b72b6effb4'
+            '07a720a8c2a109d66c6d24e3506838e4f5fa34e00d14469c15eb0de0dfcc7fe6')
+
+prepare() {
+  cd "$srcdir/owntone-server-$pkgver"
+  patch -p1 < "$srcdir/pipe-metadata-thread.patch"
+  patch -p1 < "$srcdir/airplay-sample-rate.patch"
+}
+
+build() {
+  cd "$srcdir/owntone-server-$pkgver"
+  autoreconf --force -i -I /usr/share/gettext/m4
+  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-itunes --enable-chromecast --enable-lastfm --with-libwebsockets --sbindir=/usr/bin LDFLAGS="-Wl,--allow-multiple-definition"
+  make
+}
+
+package() {
+  cd "$srcdir/owntone-server-$pkgver"
+
+  install -D -m644 "$srcdir/override.conf" "$pkgdir/usr/lib/systemd/system/owntone.service.d/override.conf"
+  install -D -m644 "owntone.service" "$pkgdir/usr/lib/systemd/system/owntone.service"
+  make DESTDIR="$pkgdir/" install
+  rmdir $pkgdir/var/run
+}

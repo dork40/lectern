@@ -1,0 +1,56 @@
+--- a/src/outputs/airplay.c	2026-10-24 11:51:41.765493677 -0700
++++ b/src/outputs/airplay.c	2026-10-24 11:51:50.332673097 -0700
+@@ -448,6 +448,11 @@
+ };
+ 
+ /* Struct with default quality levels */
++// Sample rate sent to AirPlay devices. Some receivers (e.g. Roku TVs) play
++// realtime 44.1 kHz streams as if they were 48 kHz (fast, high pitched).
++// Override with the environment variable OWNTONE_AIRPLAY_SAMPLE_RATE=48000.
++static int airplay_sample_rate = AIRPLAY_QUALITY_SAMPLE_RATE_DEFAULT;
++
+ static struct media_quality airplay_quality_default =
+ {
+   AIRPLAY_QUALITY_SAMPLE_RATE_DEFAULT,
+@@ -2620,16 +2625,16 @@
+   int ret;
+ 
+   stream = plist_new_dict();
+-  wplist_dict_add_uint(stream, "audioFormat", 262144); // 0x40000 ALAC/44100/16/2
++  wplist_dict_add_uint(stream, "audioFormat", airplay_sample_rate == 48000 ? 0x100000 : 0x40000); // ALAC/48000/16/2 or ALAC/44100/16/2
+   wplist_dict_add_string(stream, "audioMode", "default");
+   wplist_dict_add_uint(stream, "controlPort", session->control_svc->port);
+   wplist_dict_add_uint(stream, "ct", 2); // Compression type, 1 LPCM, 2 ALAC, 3 AAC, 4 AAC ELD, 32 OPUS
+   wplist_dict_add_bool(stream, "isMedia", true); // ?
+-  wplist_dict_add_uint(stream, "latencyMax", 88200); // TODO how do these latencys work?
+-  wplist_dict_add_uint(stream, "latencyMin", 11025); // AIRPLAY_AUDIO_LATENCY_MS in samples, see comment in rtp_sync_packet_next()
++  wplist_dict_add_uint(stream, "latencyMax", 2 * airplay_sample_rate); // TODO how do these latencys work?
++  wplist_dict_add_uint(stream, "latencyMin", airplay_sample_rate / 4); // AIRPLAY_AUDIO_LATENCY_MS in samples, see comment in rtp_sync_packet_next()
+   wplist_dict_add_data(stream, "shk", session->shared_secret, AIRPLAY_AUDIO_KEY_LEN);
+   wplist_dict_add_uint(stream, "spf", AIRPLAY_SAMPLES_PER_PACKET); // frames per packet
+-  wplist_dict_add_uint(stream, "sr", AIRPLAY_QUALITY_SAMPLE_RATE_DEFAULT); // sample rate
++  wplist_dict_add_uint(stream, "sr", airplay_sample_rate); // sample rate
+   wplist_dict_add_uint(stream, "type", AIRPLAY_RTP_PAYLOADTYPE); // RTP type, 0x60 = 96 real time, 103 buffered
+   wplist_dict_add_bool(stream, "supportsDynamicStreamID", false);
+   wplist_dict_add_uint(stream, "streamConnectionID", session->session_id); // Hopefully fine since we have one stream per session
+@@ -4074,7 +4079,7 @@
+   keyval_clear(&features_kv);
+ 
+   // Only default audio quality supported so far
+-  device->quality.sample_rate = AIRPLAY_QUALITY_SAMPLE_RATE_DEFAULT;
++  device->quality.sample_rate = airplay_sample_rate;
+   device->quality.bits_per_sample = AIRPLAY_QUALITY_BITS_PER_SAMPLE_DEFAULT;
+   device->quality.channels = AIRPLAY_QUALITY_CHANNELS_DEFAULT;
+ 
+@@ -4294,6 +4299,11 @@
+ 
+   airplay_device_id = libhash;
+ 
++  if (getenv("OWNTONE_AIRPLAY_SAMPLE_RATE") && atoi(getenv("OWNTONE_AIRPLAY_SAMPLE_RATE")) == 48000)
++    airplay_sample_rate = 48000;
++  airplay_quality_default.sample_rate = airplay_sample_rate;
++  DPRINTF(E_LOG, L_AIRPLAY, "AirPlay sample rate: %d\n", airplay_sample_rate);
++
+   uuid_make(airplay_ptp_clock_uuid);
+ 
+   // Check alignment of enum seq_type with airplay_seq_definition and

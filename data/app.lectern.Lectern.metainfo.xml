@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>app.lectern.Lectern</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>Lectern</name>
+  <developer id="app.lectern"><name>Lectern contributors</name></developer>
+  <summary>A calm audiobook player</summary>
+  <description>
+    <p>Lectern keeps your audiobook library organised and remembers exactly where you stopped.</p>
+    <ul>
+      <li>M4B, M4A, MP3, Ogg, Opus, FLAC and folders of files, with chapters</li>
+      <li>Sleep timer with fade-out, +5 minutes and end-of-chapter mode</li>
+      <li>Automatic cover art from iTunes, Open Library and Google Books</li>
+      <li>Volume boost up to 300%, voice clarity and night mode</li>
+      <li>Media keys and desktop media controls via MPRIS</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">app.lectern.Lectern.desktop</launchable>
+  <content_rating type="oars-1.1"/>
+  <url type="homepage">https://aur.archlinux.org/packages/lectern</url>
+  <releases><release version="0.7.7" date="2026-10-24"/><release version="0.7.6" date="2026-10-24"/><release version="0.7.5" date="2026-10-24"/><release version="0.7.4" date="2026-10-24"/><release version="0.7.3" date="2026-10-24"/><release version="0.7.2" date="2026-10-24"/><release version="0.7.1" date="2026-10-24"/><release version="0.7.0" date="2026-10-24"/><release version="0.6.2" date="2026-10-24"/><release version="0.6.1" date="2026-10-24"/><release version="0.6.0" date="2026-10-24"/><release version="0.5.1" date="2026-10-24"/><release version="0.5.0" date="2026-10-24"/><release version="0.4.0" date="2026-10-24"/><release version="0.3.0" date="2026-10-24"/><release version="0.2.0" date="2026-10-24"/><release version="0.1.0" date="2026-10-24"/></releases>
+</component>

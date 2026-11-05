@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lectern"
+version = "0.8.0"
+description = "Audiobook player for Linux (GTK4 + libadwaita + GStreamer)"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+requires-python = ">=3.11"
+dependencies = ["mutagen>=1.45", "PyGObject>=3.50", "pychromecast>=13"]
+
+[project.scripts]
+lectern = "lectern.app:main"
+
+[tool.setuptools.packages.find]
+include = ["lectern*"]
+
+[tool.setuptools.package-data]
+lectern = ["icons/*.svg", "ui/*.css"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning:gi.events"]

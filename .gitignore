@@ -1,0 +1,13 @@
+__pycache__/
+.venv/
+.pytest_cache/
+build/
+dist/
+*.egg-info/
+src/
+pkg/
+*.pkg.tar.zst
+
+# Notes about one particular setup, not part of the project
+docs/session-notes-*
+*.bak*

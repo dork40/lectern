@@ -1,0 +1,116 @@
+/* Lectern styles. Colours come from libadwaita variables so light/dark and
+   the system accent colour are followed automatically. */
+
+.cover {
+  border-radius: 10px;
+  box-shadow: 0 1px 3px alpha(black, 0.18), 0 4px 14px alpha(black, 0.12);
+  background-color: alpha(currentColor, 0.06);
+}
+.cover.small { border-radius: 6px; box-shadow: 0 1px 2px alpha(black, 0.2); }
+.cover.hero { border-radius: 12px; }
+.cover.large {
+  border-radius: 18px;
+  box-shadow: 0 6px 16px alpha(black, 0.22), 0 18px 48px alpha(black, 0.22);
+}
+
+progressbar.thin > trough,
+progressbar.thin > trough > progress {
+  min-height: 4px;
+  border-radius: 99px;
+}
+progressbar.thin > trough { background-color: alpha(currentColor, 0.12); }
+
+/* grid tiles */
+flowboxchild.book-tile-child {
+  padding: 0;
+  border-radius: 16px;
+  background: none;
+}
+.book-tile {
+  padding: 8px;
+  border-radius: 16px;
+  transition: background-color 180ms ease;
+}
+flowboxchild.book-tile-child:hover .book-tile { background-color: alpha(currentColor, 0.06); }
+flowboxchild.book-tile-child:focus-visible .book-tile { outline: 2px solid var(--accent-color); outline-offset: -2px; }
+flowboxchild.book-tile-child:active .book-tile { background-color: alpha(currentColor, 0.1); }
+.tile-title { font-weight: 700; margin-top: 2px; }
+.finished-badge {
+  background-color: var(--accent-bg-color);
+  color: var(--accent-fg-color);
+  border-radius: 99px;
+  padding: 5px;
+  box-shadow: 0 1px 4px alpha(black, 0.3);
+}
+.count-badge {
+  background-color: alpha(currentColor, 0.08);
+  border-radius: 99px;
+  padding: 1px 8px;
+}
+
+/* continue listening */
+.hero-card {
+  padding: 16px 20px 16px 16px;
+  border-radius: 20px;
+  background-color: alpha(var(--accent-bg-color), 0.10);
+  transition: background-color 180ms ease;
+}
+.hero-card:hover { background-color: alpha(var(--accent-bg-color), 0.16); }
+button.hero-play { min-width: 56px; min-height: 56px; -gtk-icon-size: 22px; }
+button.small-card { padding: 6px; border-radius: 14px; }
+.continue-row > scrollbar { opacity: 0.4; }
+
+.filters { margin-left: 12px; margin-right: 12px; }
+
+/* mini player */
+.miniplayer { background-color: transparent; }
+progressbar.mini-progress > trough,
+progressbar.mini-progress > trough > progress { min-height: 3px; border-radius: 0; }
+progressbar.mini-progress > trough { background-color: transparent; }
+button.mini-play {
+  background-color: var(--accent-bg-color);
+  color: var(--accent-fg-color);
+  min-width: 40px;
+  min-height: 40px;
+}
+
+/* now playing */
+.nowplaying { background: none; }
+.np-title { font-size: 1.65em; font-weight: 800; letter-spacing: -0.01em; }
+.np-author { font-size: 1.1em; opacity: 0.8; margin-top: 4px; }
+.np-chapter { font-weight: 600; opacity: 0.9; }
+.np-book-left { opacity: 0.7; }
+scale.np-scale > trough { min-height: 6px; border-radius: 99px; }
+scale.np-scale > trough > highlight { border-radius: 99px; }
+button.np-play {
+  min-width: 76px;
+  min-height: 76px;
+  -gtk-icon-size: 30px;
+  background-color: var(--accent-bg-color);
+  color: var(--accent-fg-color);
+  box-shadow: 0 4px 16px alpha(black, 0.25);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+button.np-play:hover { box-shadow: 0 6px 22px alpha(black, 0.3); }
+button.np-play:active { transform: scale(0.95); }
+button.np-skip { min-width: 52px; min-height: 52px; -gtk-icon-size: 24px; }
+button.np-small { min-width: 40px; min-height: 40px; }
+
+/* sleep timer */
+.timer-pill {
+  background-color: alpha(var(--accent-bg-color), 0.18);
+  border-radius: 99px;
+  padding: 0 2px;
+}
+.timer-pill button { border-radius: 99px; min-height: 30px; }
+.timer-label { font-weight: 700; }
+button.timer-extend { font-weight: 700; padding-left: 8px; padding-right: 8px; }
+button.timer-preset { padding-top: 10px; padding-bottom: 10px; }
+button.small-pill { padding: 4px 10px; }
+
+.current-chapter { font-weight: 700; }
+.cover-result { padding: 6px; }
+.skip-seconds { font-size: 7px; font-weight: 800; margin-top: 1px; }
+.np-skip .skip-seconds { font-size: 9px; margin-top: 2px; }
+
+.stat-tile { padding: 14px 6px; }

@@ -73,15 +73,6 @@ class Application(Adw.Application):
         self.mpris = MprisService(self, self.player)
         self.screen = ScreenControl()
         self.cast = CastManager()
-        # Lectern for Android syncs places through the media server (port 8765), so keep it running.
-        from .phonesync import PhoneSync
-        self.phone_sync = PhoneSync(self)
-        try:
-            self.cast._ensure_server()
-            self.cast.server.sync = self.phone_sync.handle
-            self.phone_sync.advertise(self.cast.server.port)
-        except OSError as e:
-            log.warning("phone sync unavailable: %s", e)
         self.cast.connect("connected", self._on_cast_connected)
         self.cast.connect("failed", lambda _c, msg: self.toast(msg))
         self.cast.connect("pin-needed", self._on_pin_needed)
@@ -274,7 +265,6 @@ class Application(Adw.Application):
         self.mpris.close()
         self.screen.restore_now()  # never leave the keyboard light off
         self.player.shutdown()     # stops casting before our media server goes away
-        self.phone_sync.stop()
         self.cast.shutdown()
         self.db.close()
         Adw.Application.do_shutdown(self)

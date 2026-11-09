@@ -441,15 +441,6 @@ class PreferencesDialog(Adw.PreferencesDialog):
             sleep.add(_switch("Screen and Keyboard Light Off When Timer Starts", None, s("sleep_screen_off"),
                               lambda v: setv("sleep_screen_off", v)))
         page.add(sleep)
-        phone = Adw.PreferencesGroup(
-            title="Lectern for Android",
-            description="Your phone finds this PC on the home Wi-Fi and keeps your places in sync. "
-                        "Enter this code on the phone once (Settings → PC sync).")
-        code = app.phone_sync.code
-        code_row = Adw.ActionRow(title="Pairing Code", subtitle=f"{code[:3]} {code[3:]}")
-        code_row.add_css_class("property")
-        phone.add(code_row)
-        page.add(phone)
         general = Adw.PreferencesGroup(title="Window")
         general.add(_switch("Keep Playing When Closed", "Closing the window while a book plays keeps it playing; "
                             "use media keys or reopen Lectern", s("background_playback"),

@@ -4,8 +4,6 @@ A calm, modern audiobook player for Linux, built with GTK 4, libadwaita and GStr
 
 > **This project is vibe coded.** It was written almost entirely by an AI (Claude), directed in plain language by a person who wanted the app to exist. Nobody has reviewed the code line by line. It works for its author, but expect rough edges and read the code before you trust it with anything important.
 
-There's an Android version too: [Lectern for Android](https://github.com/dork40/lectern-android). The two keep your places in sync over your home Wi-Fi: open Preferences here to find the pairing code.
-
 ![Library](docs/screenshots/library.png)
 
 | Now playing | Book details | Sleep timer |

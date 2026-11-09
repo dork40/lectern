@@ -10,7 +10,6 @@ Audio effects (boost, EQ, night mode, skip silence) are not applied while
 casting: the device decodes the original files itself.
 """
 import ipaddress
-import json
 import logging
 import mimetypes
 import os
@@ -127,7 +126,6 @@ class MediaServer:
         self._streams = {}        # token -> (path, start, rate, effects)
         self.stream_requests = {} # token -> monotonic time the device first fetched it
         self.last_request = 0.0
-        self.sync = None          # phone sync handler: (method, path, headers, body) -> (status, dict)
         server = self
 
         class Handler(BaseHTTPRequestHandler):
@@ -140,28 +138,10 @@ class MediaServer:
                 self._serve(head=True)
 
             def do_GET(self):
-                if self.path.startswith("/sync/"):
-                    return self._sync("GET")
                 self._serve(head=False)
 
             def do_POST(self):
-                if self.path.startswith("/sync/"):
-                    return self._sync("POST")
                 self.send_error(404)
-
-            def _sync(self, method):
-                if server.sync is None:
-                    self.send_error(404)
-                    return
-                length = int(self.headers.get("Content-Length") or 0)
-                body = self.rfile.read(min(length, 65536)) if length else b""
-                status, payload = server.sync(method, self.path, self.headers, body)
-                data = json.dumps(payload).encode()
-                self.send_response(status)
-                self.send_header("Content-Type", "application/json")
-                self.send_header("Content-Length", str(len(data)))
-                self.end_headers()
-                self.wfile.write(data)
 
             def _serve(self, head):
                 server.last_request = time.monotonic()

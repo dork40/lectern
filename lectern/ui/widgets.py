@@ -8,12 +8,13 @@ SPEED_PRESETS = (0.8, 1.0, 1.25, 1.5, 1.75, 2.0)
 
 
 class SkipButton(Gtk.Button):
-    """Circular-arrow button with the (configurable) number of seconds drawn inside."""
+    """Circular-arrow button with the (configurable) skip length drawn inside. fine=True is the smaller pair."""
 
-    def __init__(self, app, forward, css_classes=()):
+    def __init__(self, app, forward, css_classes=(), fine=False):
         super().__init__(css_classes=["circular", "flat", *css_classes], valign=Gtk.Align.CENTER)
         self.app = app
         self.forward = forward
+        self.fine = fine
         overlay = Gtk.Overlay(child=Gtk.Image(icon_name="lectern-forward-symbolic" if forward
                                               else "lectern-rewind-symbolic"))
         self.number = Gtk.Label(css_classes=["skip-seconds", "numeric"], halign=Gtk.Align.CENTER,
@@ -25,13 +26,17 @@ class SkipButton(Gtk.Button):
 
     @property
     def seconds(self):
+        if self.fine:
+            return float(self.app.setting("fine_skip"))
         return float(self.app.setting("skip_forward" if self.forward else "skip_back"))
 
     def refresh(self):
         n = int(self.seconds)
-        self.number.set_label(str(n))
+        self.number.set_label(f"{n // 60}m" if n >= 60 and n % 60 == 0 else str(n))
         verb = "Forward" if self.forward else "Back"
-        self.set_tooltip_text(f"{verb} {n} Seconds ({'→' if self.forward else '←'})")
+        amount = f"{n // 60} Minute{'s' if n >= 120 else ''}" if n >= 60 and n % 60 == 0 else f"{n} Seconds"
+        key = ("Shift+" if self.fine else "") + ("→" if self.forward else "←")
+        self.set_tooltip_text(f"{verb} {amount} ({key})")
 
 
 def fmt_rate(rate):

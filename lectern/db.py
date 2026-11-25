@@ -52,14 +52,16 @@ EDITABLE = ("title", "author", "narrator", "series", "series_index", "year")
 USER_COVER_SOURCES = ("online", "user")
 
 DEFAULT_SETTINGS = {
-    "skip_back": 15,
-    "skip_forward": 30,
+    "skip_back": 60,
+    "skip_forward": 60,
+    "fine_skip": 15,                 # the smaller pair under the main skip buttons
     "rewind_on_resume": True,
     "rewind_after_minutes": 10,
     "rewind_seconds": 10,
     "sleep_fade": True,
     "sleep_fade_seconds": 30,
     "sleep_rewind_seconds": 30,
+    "sleep_rewind_whole": False,     # rewind to where the timer started instead
     "sleep_screen_off": False,       # when the timer starts
     "sleep_end_screen_off": False,   # when the timer ends (opt-in)
     "sleep_last": {"mode": "duration", "minutes": 30},

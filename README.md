@@ -24,7 +24,7 @@ A calm, modern audiobook player for Linux, built with GTK 4, libadwaita and GStr
 - **Undo jump**: after jumping to a chapter, bookmark or scrubbing far, a toast offers Undo (<kbd>Ctrl</kbd>+<kbd>Z</kbd>)
 - **Keep playing when closed**: closing the window while a book plays keeps it playing (media keys/Waybar still work); reopen Lectern to get the window back
 - **Listening stats**: today, this week, day streak, total time, books finished, a 14-day chart and your most-listened books
-- Skip back and forward (default 15 s / 30 s, configurable), next and previous chapter
+- Two skip sizes: big buttons (default 1 minute) and a small pair under them (default 15 s), both configurable up to 5 minutes; next and previous chapter
 - Optional rewind on resume after a long pause (default: 10 s after a break of 10+ minutes)
 - Gapless: the files of a folder book play back to back with no pause between them
 - MPRIS2: media keys, GNOME/KDE media widgets, Waybar and `playerctl` all work. Next and Previous jump between chapters
@@ -35,7 +35,7 @@ A calm, modern audiobook player for Linux, built with GTK 4, libadwaita and GStr
 - Presets (5, 10, 15, 30, 45, 60 min), a custom hours + minutes duration, or "end of current chapter"
 - Fades the volume out over the last 30 s (length configurable, can be turned off)
 - Live countdown in the header bar with one-click **+5** and cancel
-- Rewinds a configurable number of seconds when it stops, so you don't lose what you dozed through
+- Rewinds a configurable number of seconds when it stops, so you don't lose what you dozed through, or the whole timer: back to where it started
 - Only counts down while audio is playing, and remembers your last choice
 - Can turn off the screen and keyboard light when it ends or when it starts (both off by default)
 
@@ -94,6 +94,7 @@ A calm, modern audiobook player for Linux, built with GTK 4, libadwaita and GStr
 |---|---|
 | <kbd>Space</kbd> | Play / pause |
 | <kbd>←</kbd> / <kbd>→</kbd> | Skip back / forward |
+| <kbd>Shift</kbd>+<kbd>←</kbd> / <kbd>→</kbd> | Small skip back / forward |
 | <kbd>Ctrl</kbd>+<kbd>F</kbd> | Search |
 | <kbd>Ctrl</kbd>+<kbd>T</kbd> | Sleep timer |
 | <kbd>Ctrl</kbd>+<kbd>B</kbd> | Turn off screen and keyboard light |

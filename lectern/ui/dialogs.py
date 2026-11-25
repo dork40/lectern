@@ -81,7 +81,13 @@ class SleepTimerDialog(Adw.Dialog):
         rewind.set_subtitle("Seconds to go back, so you don't miss what you dozed through")
         rewind.set_value(float(app.setting("sleep_rewind_seconds")))
         rewind.connect("notify::value", lambda r, _p: app.set_setting("sleep_rewind_seconds", int(r.get_value())))
-        rows = [fade, fade_len, rewind]
+        whole = Adw.SwitchRow(title="Rewind the Whole Timer",
+                              subtitle="Go back to where the timer started, to re-hear everything after you dozed off",
+                              active=bool(app.setting("sleep_rewind_whole")))
+        whole.connect("notify::active", lambda r, _p: app.set_setting("sleep_rewind_whole", r.get_active()))
+        whole.bind_property("active", rewind, "sensitive",
+                            GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.INVERT_BOOLEAN)
+        rows = [fade, fade_len, rewind, whole]
         if app.screen.available:
             end_dark = Adw.SwitchRow(title="Turn Off Screen and Keyboard Light",
                                      subtitle="They come back when you touch the keyboard or mouse",
@@ -418,6 +424,8 @@ class PreferencesDialog(Adw.PreferencesDialog):
             window.now_playing.update_skip_labels()
         skip.add(_spin("Skip Back", "Seconds", 5, 300, 5, s("skip_back"), lambda v: set_skip("skip_back", v)))
         skip.add(_spin("Skip Forward", "Seconds", 5, 300, 5, s("skip_forward"), lambda v: set_skip("skip_forward", v)))
+        skip.add(_spin("Fine Skip", "Seconds, for the small buttons and Shift+arrow keys", 5, 300, 5,
+                       s("fine_skip"), lambda v: set_skip("fine_skip", v)))
         page.add(skip)
         resume = Adw.PreferencesGroup(title="Resuming",
                                       description="Go back a little when you return after a long break.")

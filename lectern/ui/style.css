@@ -94,6 +94,7 @@ button.np-play {
 button.np-play:hover { box-shadow: 0 6px 22px alpha(black, 0.3); }
 button.np-play:active { transform: scale(0.95); }
 button.np-skip { min-width: 52px; min-height: 52px; -gtk-icon-size: 24px; }
+button.np-fine { min-width: 34px; min-height: 34px; -gtk-icon-size: 16px; opacity: 0.8; }
 button.np-small { min-width: 40px; min-height: 40px; }
 
 /* sleep timer */

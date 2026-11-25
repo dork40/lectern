@@ -111,6 +111,7 @@ class SleepTimer(GObject.Object):
         self.settings = settings   # callable(key) -> value
         self.logic = TimerLogic()
         self._source = 0
+        self._start_at = (None, 0.0)   # (book, position) when the timer started
         player.connect("state-changed", self._on_state)
 
     @property
@@ -151,6 +152,7 @@ class SleepTimer(GObject.Object):
 
     def cancel(self):
         self.logic.cancel()
+        self._start_at = (None, 0.0)
         self.player.set_fade(1.0)
         self._stop_ticking()
         self.emit("changed")
@@ -159,6 +161,9 @@ class SleepTimer(GObject.Object):
         return self.logic.remaining(self._chapter_left())
 
     def _started(self):
+        # where this timer started, for "rewind the whole timer" (kept when the timer is changed or extended)
+        if self.player.book is not None and self._start_at[0] is not self.player.book:
+            self._start_at = (self.player.book, self.player.position)
         if not self._source:
             self._source = GLib.timeout_add(250, self._tick)
         self.emit("changed")
@@ -202,9 +207,14 @@ class SleepTimer(GObject.Object):
         book = self.player.book
         if mode == TimerLogic.CHAPTER and book and 0 <= chapter < len(book.chapters):
             self.player.seek(book.chapters[chapter].end)  # stop exactly at the boundary
-        rewind = float(self.settings("sleep_rewind_seconds") or 0)
-        if rewind > 0:
-            self.player.skip(-rewind)
+        start_book, start_pos = self._start_at
+        self._start_at = (None, 0.0)
+        if self.settings("sleep_rewind_whole") and book is not None and start_book is book:
+            self.player.seek(min(start_pos, self.player.position))   # back to where the timer started
+        else:
+            rewind = float(self.settings("sleep_rewind_seconds") or 0)
+            if rewind > 0:
+                self.player.skip(-rewind)
         self.player.set_fade(1.0)
         self.emit("changed")
         self.emit("expired")

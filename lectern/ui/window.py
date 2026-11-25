@@ -230,11 +230,12 @@ class MainWindow(Adw.ApplicationWindow):
             return True
         if isinstance(focus, Gtk.Range):
             return False
+        shift = bool(state & Gdk.ModifierType.SHIFT_MASK)   # Shift+arrow = the fine skip
         if keyval == Gdk.KEY_Left and p.book:
-            p.skip(-float(self.app.setting("skip_back")))
+            p.skip(-float(self.app.setting("fine_skip" if shift else "skip_back")))
             return True
         if keyval == Gdk.KEY_Right and p.book:
-            p.skip(float(self.app.setting("skip_forward")))
+            p.skip(float(self.app.setting("fine_skip" if shift else "skip_forward")))
             return True
         if keyval == Gdk.KEY_Escape and self.now_playing_open:
             self.close_now_playing()

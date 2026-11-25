@@ -139,6 +139,13 @@ class NowPlayingView(Adw.BreakpointBin):
         for b in (self.prev_ch, self.back, self.play, self.fwd, self.next_ch):
             controls.append(b)
         body.append(controls)
+        # fine skip: a smaller pair under the big buttons, so a big and a small hop are both one click away
+        fine = Gtk.Box(spacing=114, halign=Gtk.Align.CENTER, margin_top=2)   # lines up under the big ones
+        self.fine_back = SkipButton(app, forward=False, css_classes=["np-fine"], fine=True)
+        self.fine_fwd = SkipButton(app, forward=True, css_classes=["np-fine"], fine=True)
+        fine.append(self.fine_back)
+        fine.append(self.fine_fwd)
+        body.append(fine)
 
         extras = Gtk.Box(spacing=6, halign=Gtk.Align.CENTER, margin_top=14)
         extras.append(SpeedButton(app))
@@ -191,7 +198,7 @@ class NowPlayingView(Adw.BreakpointBin):
         self.clamp.set_maximum_size(max(520, size + 160))
 
     def update_skip_labels(self):
-        for b in (self.back, self.fwd, self.window.mini.back, self.window.mini.fwd):
+        for b in (self.back, self.fwd, self.fine_back, self.fine_fwd, self.window.mini.back, self.window.mini.fwd):
             b.refresh()
 
     def _open_details(self):

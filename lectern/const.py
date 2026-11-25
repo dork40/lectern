@@ -1,10 +1,10 @@
 import os
 from pathlib import Path
 
-APP_ID = "app.lectern.Lectern"
+APP_ID = "io.github.dork40.Lectern"
 APP_NAME = "Lectern"
 APP_SLUG = "lectern"
-VERSION = "0.8.0"
+VERSION = "0.8.1"
 # bump when scanning/metadata rules change: existing libraries get one full rescan
 SCAN_VERSION = 2
 
@@ -24,7 +24,7 @@ AUDIO_EXTS = {".m4b", ".m4a", ".mp3", ".ogg", ".oga", ".opus", ".flac"}
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp"}
 COVER_NAMES = ("cover", "folder", "front", "album", "art", "poster")
 
-USER_AGENT = f"{APP_NAME}/{VERSION} (audiobook player; +https://aur.archlinux.org/packages/{APP_SLUG})"
+USER_AGENT = f"{APP_NAME}/{VERSION} (audiobook player; +https://github.com/dork40/lectern)"
 
 
 def ensure_dirs():

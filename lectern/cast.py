@@ -470,7 +470,10 @@ class CastManager(GObject.Object):
 
     @property
     def airplay_available(self):
-        from .airplay import find_owntone
+        try:
+            from .airplay import find_owntone
+        except ImportError:   # no cryptography (e.g. the Flatpak, which has no OwnTone either)
+            return False
         return find_owntone() is not None
 
     @property

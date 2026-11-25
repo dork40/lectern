@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.dork40.Lectern</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>Lectern</name>
+  <developer id="io.github.dork40"><name>dork40</name></developer>
+  <summary>Listen to your own audiobooks</summary>
+  <description>
+    <p>Lectern is a calm audiobook player for the books you already own. Point it at a folder and it finds your books, their chapters and their covers, and remembers exactly where you stopped in each one. No accounts, no cloud, nothing watching what you listen to.</p>
+    <ul>
+      <li>M4B, M4A, MP3, Ogg, Opus and FLAC, single files or folders of files, with chapters</li>
+      <li>Sleep timer with fade-out, +5 minutes, end of chapter, and a rewind when it stops</li>
+      <li>Two skip sizes, playback speed from 0.5× to 3× and skip silence</li>
+      <li>Bookmarks with notes, and undo after a big jump</li>
+      <li>Volume boost, voice clarity and night mode for quiet or uneven recordings</li>
+      <li>Covers found automatically from iTunes, Open Library and Google Books</li>
+      <li>Cast to Chromecast and Google TV devices on your network</li>
+      <li>Listening stats, media keys and desktop media controls</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">io.github.dork40.Lectern.desktop</launchable>
+  <provides><binary>lectern</binary></provides>
+  <url type="homepage">https://github.com/dork40/lectern</url>
+  <url type="bugtracker">https://github.com/dork40/lectern/issues</url>
+  <url type="vcs-browser">https://github.com/dork40/lectern</url>
+  <content_rating type="oars-1.1"/>
+  <branding>
+    <color type="primary" scheme_preference="light">#e8dfd0</color>
+    <color type="primary" scheme_preference="dark">#2b2620</color>
+  </branding>
+  <requires><display_length compare="ge">360</display_length></requires>
+  <supports>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </supports>
+  <keywords>
+    <keyword>audiobook</keyword>
+    <keyword>audio book</keyword>
+    <keyword>m4b</keyword>
+    <keyword>player</keyword>
+    <keyword>sleep timer</keyword>
+  </keywords>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/dork40/lectern/v0.8.1/docs/screenshots/library.png</image>
+      <caption>Your library, with covers found automatically</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/dork40/lectern/v0.8.1/docs/screenshots/now-playing.png</image>
+      <caption>Now playing</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/dork40/lectern/v0.8.1/docs/screenshots/book.png</image>
+      <caption>A book's chapters and bookmarks</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/dork40/lectern/v0.8.1/docs/screenshots/sleep-timer.png</image>
+      <caption>Sleep timer</caption>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="0.8.1" date="2026-11-24">
+      <description>
+        <ul>
+          <li>Two skip sizes: big skip buttons (1 minute) and a small pair (15 seconds) under them</li>
+          <li>Sleep timer can rewind to where it started, so you can re-hear what you dozed through</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.8.0" date="2026-11-10"/>
+    <release version="0.7.7" date="2026-10-24"/>
+  </releases>
+</component>

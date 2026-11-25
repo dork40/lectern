@@ -554,7 +554,7 @@ class Application(Adw.Application):
             application_name=APP_NAME, application_icon=APP_ID, version=VERSION,
             developer_name="Lectern contributors", license_type=Gtk.License.GPL_3_0,
             comments="A calm audiobook player for Linux",
-            website="https://aur.archlinux.org/packages/lectern")
+            website="https://github.com/dork40/lectern")
         about.present(self.window)
 
 

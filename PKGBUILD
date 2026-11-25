@@ -2,11 +2,11 @@
 # Builds from this source tree: run `makepkg -si` in the project directory.
 # For an AUR upload, replace prepare() with a release tarball in source=().
 pkgname=lectern
-pkgver=0.8.0
+pkgver=0.8.1
 pkgrel=1
 pkgdesc="Audiobook player with sleep timer, automatic cover art and volume boost (GTK4/libadwaita)"
 arch=('any')
-url="https://aur.archlinux.org/packages/lectern"
+url="https://github.com/dork40/lectern"
 license=('GPL-3.0-or-later')
 depends=(
   'python'
@@ -56,11 +56,11 @@ check() {
 package() {
   cd "$srcdir/$pkgname"
   python -m installer --destdir="$pkgdir" dist/*.whl
-  install -Dm644 data/app.lectern.Lectern.desktop -t "$pkgdir/usr/share/applications/"
-  install -Dm644 data/app.lectern.Lectern.metainfo.xml -t "$pkgdir/usr/share/metainfo/"
-  install -Dm644 data/icons/hicolor/scalable/apps/app.lectern.Lectern.svg \
+  install -Dm644 data/io.github.dork40.Lectern.desktop -t "$pkgdir/usr/share/applications/"
+  install -Dm644 data/io.github.dork40.Lectern.metainfo.xml -t "$pkgdir/usr/share/metainfo/"
+  install -Dm644 data/icons/hicolor/scalable/apps/io.github.dork40.Lectern.svg \
     -t "$pkgdir/usr/share/icons/hicolor/scalable/apps/"
-  install -Dm644 data/icons/hicolor/symbolic/apps/app.lectern.Lectern-symbolic.svg \
+  install -Dm644 data/icons/hicolor/symbolic/apps/io.github.dork40.Lectern-symbolic.svg \
     -t "$pkgdir/usr/share/icons/hicolor/symbolic/apps/"
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }

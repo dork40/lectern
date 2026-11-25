@@ -109,7 +109,14 @@ Files can also be opened from a file manager with "Open With → Lectern".
 
 ## Install (Arch Linux)
 
-The quickest way is the ready-made package from the [latest release](https://github.com/dork40/lectern/releases/latest):
+Add my pacman repo once, then it's a normal pacman install (updates come with `pacman -Syu`):
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/dork40/arch-repo/main/setup.sh | bash
+sudo pacman -S lectern
+```
+
+Or grab the package straight from the [latest release](https://github.com/dork40/lectern/releases/latest):
 
 ```sh
 curl -LO https://github.com/dork40/lectern/releases/download/v0.8.1/lectern-0.8.1-1-any.pkg.tar.zst

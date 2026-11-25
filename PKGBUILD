@@ -11,6 +11,9 @@ license=('GPL-3.0-or-later')
 depends=(
   'python'
   'python-gobject'
+  'glib2'
+  'graphene'
+  'hicolor-icon-theme'
   'python-cairo'
   'python-mutagen'
   'python-cryptography'  # AirPlay pairing

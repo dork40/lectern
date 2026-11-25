@@ -109,6 +109,15 @@ Files can also be opened from a file manager with "Open With → Lectern".
 
 ## Install (Arch Linux)
 
+The quickest way is the ready-made package from the [latest release](https://github.com/dork40/lectern/releases/latest):
+
+```sh
+curl -LO https://github.com/dork40/lectern/releases/download/v0.8.1/lectern-0.8.1-1-any.pkg.tar.zst
+sudo pacman -U lectern-0.8.1-1-any.pkg.tar.zst
+```
+
+Or build it from source, which also offers the extras below (firewall, AirPlay):
+
 ```sh
 ./install.sh          # dependencies + build + tests + install, in one go
 ./install.sh --run    # same, then start Lectern
